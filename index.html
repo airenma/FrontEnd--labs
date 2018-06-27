@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container" id="app">
+    <div class="row">
+        <div class="container">
+            <h1 class="center-align">User management</h1>
+            <div class="col s12 center-align">
+                <a class="waves-effect waves-light btn" href="#modal1">
+                    <i class="material-icons right">insert_chart</i>
+                    Show chart
+                </a>
+            </div>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input placeholder="Placeholder" id="first_name" type="text" class="validate" v-model="search">
+                            <label for="first_name">First Name</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header">
+                    <span class="col s1"></span>
+                    <span class="col s2">Last</span>
+                    <span class="col s2">First</span>
+                    <span class="col s2">Username</span>
+                    <span class="col s2">Phone</span>
+                    <span class="col s2">Location</span>
+                    <span class="col s1"></span>
+                </div>
+            </li>
+            <li v-for="(user, index) in tableFilter" class="user-block" :key="user.id">
+                <div class="collapsible-header" v-on:click="toggleUser(index, user.edit)">
+                    <div class="col s1">
+                        <img class="circle" :src="user.picture.thumbnail">
+                    </div>
+                    <div class="col s2">{{user.name.last}}</div>
+                    <div class="col s2">{{user.name.first}}</div>
+                    <div class="col s2">{{user.login.username}}</div>
+                    <div class="col s2">{{user.phone}}</div>
+                    <div class="col s2">{{user.location.state}}</div>
+                    <div class="col s1 center-align">
+                        <span v-if="!user.edit">+</span>
+                        <span v-if="user.edit">-</span>
+                    </div>
+                </div>
+                <div class="collapsible-body row">
+                    <h3>{{user.name.first}}
+                        <i class="fa fa-male" aria-hidden="true" v-if="user.gender === 'male'"></i>
+                        <i class="fa fa-female" aria-hidden="true" v-if="user.gender === 'female'"></i>
+                    </h3>
+                    <div class="col s3">
+                        <div class="row">
+                            <div class="col s12">
+                                <p><b>Username:</b> {{user.login.username}}</p>
+                                <p><b>Registered:</b> {{user.registered}}</p>
+                                <p><b>Email:</b> {{user.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s3">
+                        <div class="row">
+                            <div class="col s12">
+                                <p><b>Address:</b> {{user.location.street}}</p>
+                                <p><b>City:</b> {{user.location.city}}</p>
+                                <p><b>Zip Code:</b> {{user.location.postcode}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s3">
+                        <div class="row">
+                            <div class="col s12">
+                                <p><b>Birthday:</b> {{user.dob}}</p>
+                                <p><b>Phone:</b> {{user.phone}}</p>
+                                <p><b>Cell:</b> {{user.cell}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s3">
+                        <img class="circle" :src="user.picture.large">
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4 class="center-align">Gender users</h4>
+            <div>
+                <canvas id="myChart" width="180" height="70"></canvas>
+            </div>
+        </div>
+        <div class="modal-footer center-align">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/fd0fc7c677.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
